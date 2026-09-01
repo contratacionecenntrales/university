@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 `app/page.tsx` renders an interactive 3D Spline scene demo built from `components/ui/splite.tsx`, `components/ui/spotlight.tsx`, and `components/ui/card.tsx` (see `components/ui/demo.tsx`).
 
-The previous static EDIBS Escuela de Negocios landing page still lives at `public/edibschool.html`, served as-is at `/edibschool.html`.
+The Big Bang University landing page lives at `public/big-bang-university.html`, served as-is at `/big-bang-university.html`. Its legal pages (`aviso-legal.html`, `privacidad.html`, `cookies.html`, `condiciones.html`) and brand assets (`brand/`, `favicon.svg`) live alongside it in `public/`.
 
 ## Getting Started
 
