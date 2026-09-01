@@ -114,6 +114,10 @@
     </nav>
 
     <div class="flex items-center gap-3">
+      <button id="cart-toggle" class="relative w-10 h-10 flex items-center justify-center rounded-lg border border-line text-white hover:border-accent/60 transition-colors" aria-label="Abrir carrito">
+        <svg class="w-5 h-5" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+        <span id="cart-count" class="hidden absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-accent text-white text-[10px] font-bold flex items-center justify-center">0</span>
+      </button>
       <a href="#contacto" class="hidden lg:inline-flex items-center rounded-full px-5 py-2.5 text-sm font-bold text-white btn-primary">Solicitar información</a>
       <button id="menu-toggle" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-line text-white" aria-label="Abrir menú">
         <svg class="w-5 h-5" viewBox="0 0 448 512" fill="currentColor"><path d="M16 132h416c8.8 0 16-7.2 16-16V76c0-8.8-7.2-16-16-16H16C7.2 60 0 67.2 0 76v40c0 8.8 7.2 16 16 16zm0 160h416c8.8 0 16-7.2 16-16v-40c0-8.8-7.2-16-16-16H16c-8.8 0-16 7.2-16 16v40c0 8.8 7.2 16 16 16zm0 160h416c8.8 0 16-7.2 16-16v-40c0-8.8-7.2-16-16-16H16c-8.8 0-16 7.2-16 16v40c0 8.8 7.2 16 16 16z"/></svg>
@@ -132,6 +136,30 @@
     </nav>
   </div>
 </header>
+
+<!-- ===================== CARRITO ===================== -->
+<div id="cart-overlay" class="hidden fixed inset-0 bg-black/60 z-[60]"></div>
+<aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-panel border-l border-line z-[70] flex flex-col translate-x-full transition-transform duration-300">
+  <div class="flex items-center justify-between px-6 h-[74px] border-b border-line shrink-0">
+    <h2 class="font-bold text-white text-lg">Tu carrito</h2>
+    <button id="cart-close" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-panel2 text-slate-400 hover:text-white transition-colors" aria-label="Cerrar carrito">
+      <svg class="w-4 h-4" viewBox="0 0 384 512" fill="currentColor"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+    </button>
+  </div>
+  <div id="cart-empty" class="flex-1 flex flex-col items-center justify-center gap-3 px-6 text-center text-slate-500">
+    <p>Tu carrito está vacío.</p>
+    <a href="#programas" id="cart-empty-link" class="text-sm font-bold text-accent hover:underline">Ver programas</a>
+  </div>
+  <div id="cart-items" class="hidden flex-1 overflow-y-auto px-6 py-4 space-y-4"></div>
+  <div id="cart-footer" class="hidden shrink-0 border-t border-line p-6 space-y-4">
+    <div class="flex items-center justify-between text-white font-bold text-lg">
+      <span>Total</span>
+      <span id="cart-total">0 €</span>
+    </div>
+    <button id="cart-checkout" class="w-full rounded-full px-6 py-3.5 font-bold text-white btn-primary">FINALIZAR POR EMAIL</button>
+    <p class="text-xs text-slate-500 text-center">Te redirigimos a tu cliente de correo con el resumen del pedido para confirmar la matrícula.</p>
+  </div>
+</aside>
 
 <main>
 <!-- ===================== HERO ===================== -->
@@ -168,56 +196,88 @@
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">Inteligencia Artificial</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en Inteligencia Artificial Aplicada a Negocio</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Diseña sistemas basados en IA que automaticen procesos, optimicen ventas y generen activos digitales escalables.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="ia" data-title="Curso en Inteligencia Artificial Aplicada a Negocio" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
 
       <article class="card-hover group bg-panel border border-line rounded-2xl p-6 flex flex-col">
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">Ventas</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en Cierre de Ventas</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Desarrolla una estructura profesional para cerrar ventas de alto valor con método, criterio estratégico y enfoque consultivo.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="ventas" data-title="Curso en Cierre de Ventas" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
 
       <article class="card-hover group bg-panel border border-line rounded-2xl p-6 flex flex-col">
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">Vehículos</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en Importación y Compra-Venta de Vehículos</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Estructura un negocio internacional del motor con método, control del margen y seguridad jurídica.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="vehiculos" data-title="Curso en Importación y Compra-Venta de Vehículos" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
 
       <article class="card-hover group bg-panel border border-line rounded-2xl p-6 flex flex-col">
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">Ciberseguridad</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en Ciberseguridad</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Especialízate en uno de los sectores con mayor proyección global y aprende a operar con estructura en entornos digitales críticos.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="ciberseguridad" data-title="Curso en Ciberseguridad" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
 
       <article class="card-hover group bg-panel border border-line rounded-2xl p-6 flex flex-col">
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">Inmobiliario</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en Intermediación Inmobiliaria Digital</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Construye un modelo inmobiliario digital, legal y escalable sin depender de estructuras tradicionales.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="inmobiliario" data-title="Curso en Intermediación Inmobiliaria Digital" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
 
       <article class="card-hover group bg-panel border border-line rounded-2xl p-6 flex flex-col">
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">E-commerce</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en Amazon FBA</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Construye un modelo rentable en Amazon mediante análisis de producto, estrategia de posicionamiento y optimización operativa.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="amazon-fba" data-title="Curso en Amazon FBA" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
 
       <article class="card-hover group bg-panel border border-line rounded-2xl p-6 flex flex-col">
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">E-commerce</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en E-commerce</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Aprende a crear, validar y escalar marcas digitales con proyección internacional y estructura empresarial.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="ecommerce" data-title="Curso en E-commerce" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
 
       <article class="card-hover group bg-panel border border-line rounded-2xl p-6 flex flex-col">
         <span class="text-xs font-bold tracking-widest uppercase text-accent2">Finanzas</span>
         <h3 class="mt-3 text-lg font-bold text-white">Curso en Trading y Mercados Financieros</h3>
         <p class="mt-3 text-sm text-slate-400 flex-1">Opera en mercados financieros con disciplina, gestión estructurada del riesgo y visión profesional.</p>
-        <a href="#programas" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-accent group-hover:gap-3 transition-all">Ver programa <span aria-hidden="true">→</span></a>
+        <p class="mt-4 text-xl font-extrabold text-white">990&nbsp;€</p>
+        <button type="button" class="add-to-cart mt-3 inline-flex items-center justify-center gap-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white btn-primary" data-slug="trading" data-title="Curso en Trading y Mercados Financieros" data-price="990">
+          <svg class="w-4 h-4" viewBox="0 0 576 512" fill="currentColor"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.6c2.2 11.3 12.1 19.7 23.7 19.7H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+          Añadir al carrito
+        </button>
       </article>
     </div>
   </div>
@@ -460,6 +520,128 @@
     });
   }, { threshold: 0.6 });
   counters.forEach((c) => counterObserver.observe(c));
+
+  // ===================== CARRITO =====================
+  (() => {
+    const KEY = 'bbu-cart-v1';
+    const fmt = (n) => n.toLocaleString('es-ES') + ' €';
+
+    const readCart = () => {
+      try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+      catch (e) { return []; }
+    };
+    const writeCart = (items) => {
+      localStorage.setItem(KEY, JSON.stringify(items));
+      render();
+    };
+    const addItem = (slug, title, price) => {
+      const items = readCart();
+      const existing = items.find((it) => it.slug === slug);
+      if (existing) existing.qty += 1;
+      else items.push({ slug, title, price, qty: 1 });
+      writeCart(items);
+      openDrawer();
+    };
+    const setQty = (slug, qty) => {
+      let items = readCart();
+      if (qty <= 0) items = items.filter((it) => it.slug !== slug);
+      else items = items.map((it) => (it.slug === slug ? { ...it, qty } : it));
+      writeCart(items);
+    };
+
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-overlay');
+    const cartCount = document.getElementById('cart-count');
+    const cartEmpty = document.getElementById('cart-empty');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartFooter = document.getElementById('cart-footer');
+    const cartTotal = document.getElementById('cart-total');
+
+    function openDrawer() {
+      drawer.classList.remove('translate-x-full');
+      overlay.classList.remove('hidden');
+    }
+    function closeDrawer() {
+      drawer.classList.add('translate-x-full');
+      overlay.classList.add('hidden');
+    }
+
+    function render() {
+      const items = readCart();
+      const totalQty = items.reduce((sum, it) => sum + it.qty, 0);
+      const totalPrice = items.reduce((sum, it) => sum + it.qty * it.price, 0);
+
+      if (totalQty > 0) {
+        cartCount.textContent = totalQty;
+        cartCount.classList.remove('hidden');
+      } else {
+        cartCount.classList.add('hidden');
+      }
+
+      if (items.length === 0) {
+        cartEmpty.classList.remove('hidden');
+        cartItemsEl.classList.add('hidden');
+        cartFooter.classList.add('hidden');
+        return;
+      }
+
+      cartEmpty.classList.add('hidden');
+      cartItemsEl.classList.remove('hidden');
+      cartFooter.classList.remove('hidden');
+      cartTotal.textContent = fmt(totalPrice);
+
+      cartItemsEl.innerHTML = items.map((it) => `
+        <div class="flex items-start justify-between gap-3 pb-4 border-b border-line" data-slug="${it.slug}">
+          <div class="flex-1">
+            <p class="text-sm font-bold text-white">${it.title}</p>
+            <p class="mt-1 text-xs text-slate-500">${fmt(it.price)} / ud.</p>
+            <div class="mt-2 flex items-center gap-2">
+              <button type="button" class="qty-minus w-7 h-7 rounded-lg border border-line text-white flex items-center justify-center hover:border-accent/60">−</button>
+              <span class="w-6 text-center text-sm text-white">${it.qty}</span>
+              <button type="button" class="qty-plus w-7 h-7 rounded-lg border border-line text-white flex items-center justify-center hover:border-accent/60">+</button>
+              <button type="button" class="qty-remove ml-2 text-xs text-slate-500 hover:text-red-400">Eliminar</button>
+            </div>
+          </div>
+          <p class="text-sm font-bold text-white shrink-0">${fmt(it.qty * it.price)}</p>
+        </div>
+      `).join('');
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        addItem(btn.dataset.slug, btn.dataset.title, parseInt(btn.dataset.price, 10));
+      });
+    });
+
+    cartItemsEl.addEventListener('click', (e) => {
+      const row = e.target.closest('[data-slug]');
+      if (!row) return;
+      const slug = row.dataset.slug;
+      const items = readCart();
+      const item = items.find((it) => it.slug === slug);
+      if (!item) return;
+      if (e.target.closest('.qty-plus')) setQty(slug, item.qty + 1);
+      else if (e.target.closest('.qty-minus')) setQty(slug, item.qty - 1);
+      else if (e.target.closest('.qty-remove')) setQty(slug, 0);
+    });
+
+    document.getElementById('cart-toggle').addEventListener('click', openDrawer);
+    document.getElementById('cart-close').addEventListener('click', closeDrawer);
+    document.getElementById('cart-empty-link').addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    document.getElementById('cart-checkout').addEventListener('click', () => {
+      const items = readCart();
+      if (items.length === 0) return;
+      const totalPrice = items.reduce((sum, it) => sum + it.qty * it.price, 0);
+      const lines = items.map((it) => `- ${it.title} x${it.qty} (${fmt(it.qty * it.price)})`).join('\n');
+      const subject = 'Solicitud de matrícula - Big Bang University';
+      const body = `Hola, quiero solicitar información/matrícula para:\n\n${lines}\n\nTotal: ${fmt(totalPrice)}\n\nNombre:\nTeléfono:`;
+      window.location.href = `mailto:info@bigbanuniversity.es?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+    render();
+  })();
 </script>
 </body>
 </html>
