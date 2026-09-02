@@ -1,0 +1,22 @@
+---
+import Button from "./Button.astro";
+---
+
+<section class="relative overflow-hidden py-24 md:py-32">
+  <div class="pointer-events-none absolute inset-0 bg-noise" aria-hidden="true"></div>
+  <div class="container-page relative">
+    <div class="mx-auto max-w-2xl rounded-3xl border border-border-soft bg-surface/60 p-10 text-center backdrop-blur md:p-16">
+      <h2 class="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        Tu próximo modelo de negocio empieza con una <span class="text-neon text-glow-neon">decisión</span>.
+      </h2>
+      <p class="mx-auto mt-4 max-w-lg text-base text-ink-muted">
+        Habla con nuestro equipo de admisiones y descubre qué programa se ajusta a tu perfil, tu capital y tus
+        objetivos.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button href="/becas-y-admision/" size="lg">Solicitar información →</Button>
+        <Button href="/programas/" variant="secondary" size="lg">Explorar programas</Button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import LeadForm from "@/components/LeadForm.astro";
+
+const steps = [
+  { title: "Solicitud", description: "Completa el formulario con tus datos y el programa de tu interés." },
+  { title: "Entrevista de admisión", description: "Un asesor evalúa tu perfil, objetivos y disponibilidad para el programa." },
+  { title: "Financiación", description: "Te presentamos las opciones de beca o financiación sin intereses disponibles." },
+  { title: "Incorporación", description: "Accedes a la plataforma, la comunidad y el primer módulo de tu programa." },
+];
+
+const scholarships = [
+  { title: "Beca de acceso temprano", description: "Reducción aplicable a solicitudes completadas antes del cierre de cada cohorte." },
+  { title: "Financiación sin intereses", description: "Fracciona el importe del programa sin coste financiero adicional, sujeto a evaluación." },
+  { title: "Beca por perfil profesional", description: "Condiciones especiales para perfiles con experiencia previa relevante en el sector." },
+];
+---
+
+<Layout
+  title="Becas y Admisión"
+  description="Conoce el proceso de admisión, las becas disponibles y las opciones de financiación sin intereses de Big Bang University."
+>
+  <section class="bg-noise py-20 md:py-28">
+    <div class="container-page grid gap-14 lg:grid-cols-[1.2fr_1fr] lg:items-start">
+      <div>
+        <SectionHeading
+          eyebrow="Becas y Admisión"
+          title="Financia tu formación sin frenar tu decisión"
+          description="Ofrecemos becas y financiación sin intereses para que el presupuesto no sea la barrera entre tú y un modelo de negocio rentable."
+        />
+
+        <div class="mt-12">
+          <h2 class="font-display text-xl font-semibold text-ink">Proceso de admisión</h2>
+          <ol class="mt-5 grid gap-4">
+            {
+              steps.map((step, index) => (
+                <li class="flex gap-4">
+                  <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/40 bg-gold/10 font-mono text-xs font-semibold text-gold-soft">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <h3 class="font-display text-sm font-semibold text-ink">{step.title}</h3>
+                    <p class="mt-1 text-sm text-ink-muted">{step.description}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <div class="mt-12">
+          <h2 class="font-display text-xl font-semibold text-ink">Becas disponibles</h2>
+          <div class="mt-5 grid gap-4 sm:grid-cols-3">
+            {
+              scholarships.map((s) => (
+                <div class="card-surface rounded-xl p-5">
+                  <h3 class="font-display text-sm font-semibold text-ink">{s.title}</h3>
+                  <p class="mt-2 text-xs leading-relaxed text-ink-muted">{s.description}</p>
+                </div>
+              ))
+            }
+          </div>
+          <p class="mt-4 text-xs leading-relaxed text-ink-faint">
+            Becas y condiciones de financiación sujetas a evaluación de perfil y disponibilidad por cohorte. Un
+            asesor de admisiones te confirmará las condiciones aplicables tras tu solicitud.
+          </p>
+        </div>
+      </div>
+
+      <div class="lg:sticky lg:top-24">
+        <LeadForm
+          source="Becas y Admisión"
+          title="Solicita tu plaza"
+          subtitle="Cuéntanos tu situación y te contactaremos con las opciones de beca y financiación disponibles."
+          submitLabel="Solicitar admisión →"
+        />
+      </div>
+    </div>
+  </section>
+</Layout>

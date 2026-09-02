@@ -1,0 +1,48 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import AIFacultySection from "@/components/AIFacultySection.astro";
+import FinalCTA from "@/components/FinalCTA.astro";
+---
+
+<Layout
+  title="Claustro de Inteligencia Artificial & Mentores de Élite"
+  description="Descubre el sistema de IA propietario y la Dirección de Operaciones que sostienen la metodología de Big Bang University."
+>
+  <section class="bg-noise py-20 md:py-28">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="Por qué no dependemos de una sola persona"
+        title="Una metodología institucional, no una promesa individual"
+        description="La formación tradicional depende de la disponibilidad, el estado de ánimo o la agenda de una persona concreta. En Big Bang University la experiencia no desaparece cuando alguien se va: vive en sistemas de IA entrenados con miles de casos reales y en una Dirección de Operaciones que audita cada programa de forma constante."
+      />
+
+      <div class="mt-14 grid gap-5 md:grid-cols-3">
+        <div class="card-surface rounded-2xl p-6">
+          <h3 class="font-display text-base font-semibold text-ink">Consistencia</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+            Cada alumno recibe el mismo estándar de calidad, sin depender del criterio subjetivo de un formador
+            concreto.
+          </p>
+        </div>
+        <div class="card-surface rounded-2xl p-6">
+          <h3 class="font-display text-base font-semibold text-ink">Disponibilidad</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+            Los sistemas de IA están disponibles 24/7 para resolver dudas y entrenar habilidades, sin listas de
+            espera.
+          </p>
+        </div>
+        <div class="card-surface rounded-2xl p-6">
+          <h3 class="font-display text-base font-semibold text-ink">Mejora continua</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+            Cada interacción alimenta el sistema. El contenido y las recomendaciones mejoran con cada cohorte de
+            alumnos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <AIFacultySection />
+  <FinalCTA />
+</Layout>

@@ -1,0 +1,80 @@
+---
+import "@/styles/global.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/sora/500.css";
+import "@fontsource/sora/600.css";
+import "@fontsource/sora/700.css";
+import "@fontsource/sora/800.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "@fontsource/jetbrains-mono/600.css";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import CookieConsent from "@/components/CookieConsent.astro";
+import { SITE } from "@/config/site";
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title, description = SITE.description, noindex = false } = Astro.props;
+
+const pageTitle = title.includes(SITE.name) ? title : `${title} — ${SITE.name}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: SITE.name,
+  legalName: SITE.legalName,
+  url: SITE.url,
+  logo: `${SITE.url}/brand/logo-full.svg`,
+  sameAs: [],
+};
+---
+
+<!doctype html>
+<html lang="es-ES">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(orgSchema)} />
+  </head>
+  <body class="bg-noise min-h-screen bg-bg font-sans text-ink">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-neon focus:px-4 focus:py-2 focus:text-[#05100c]"
+    >
+      Saltar al contenido
+    </a>
+
+    <Header />
+    <main id="main-content" class="pt-[4.5rem]">
+      <slot />
+    </main>
+    <Footer />
+    <CookieConsent />
+  </body>
+</html>

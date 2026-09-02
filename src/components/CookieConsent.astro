@@ -1,0 +1,121 @@
+---
+import Button from "./Button.astro";
+---
+
+<div
+  id="cookie-consent"
+  class="fixed inset-x-4 bottom-4 z-[90] hidden max-w-xl rounded-2xl border border-border-soft bg-surface/95 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl md:inset-x-auto md:right-6 md:bottom-6"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="cookie-consent-title"
+  aria-describedby="cookie-consent-desc"
+>
+  <h2 id="cookie-consent-title" class="font-display text-base font-semibold text-ink">Tu privacidad, primero</h2>
+  <p id="cookie-consent-desc" class="mt-2 text-sm leading-relaxed text-ink-muted">
+    Usamos cookies propias y de terceros para el correcto funcionamiento del sitio, medir el rendimiento y, con tu
+    consentimiento, mostrarte publicidad personalizada. Puedes aceptar, rechazar o configurar tus preferencias.
+    Consulta más información en nuestra
+    <a href="/politica-cookies/" class="text-neon underline underline-offset-2">Política de Cookies</a>.
+  </p>
+
+  <div id="cookie-consent-options" class="mt-4 hidden flex-col gap-3 border-t border-border-soft pt-4">
+    <label class="flex items-center justify-between gap-4 text-sm text-ink-muted">
+      <span>Cookies técnicas <span class="text-ink-faint">(necesarias, siempre activas)</span></span>
+      <input type="checkbox" checked disabled class="h-4 w-4 accent-neon" />
+    </label>
+    <label class="flex items-center justify-between gap-4 text-sm text-ink-muted">
+      <span>Cookies analíticas</span>
+      <input type="checkbox" id="consent-analytics" class="h-4 w-4 accent-neon" />
+    </label>
+    <label class="flex items-center justify-between gap-4 text-sm text-ink-muted">
+      <span>Cookies publicitarias</span>
+      <input type="checkbox" id="consent-marketing" class="h-4 w-4 accent-neon" />
+    </label>
+  </div>
+
+  <div class="mt-5 flex flex-wrap gap-3">
+    <Button size="md" id="cookie-accept-all">Aceptar todas</Button>
+    <button
+      id="cookie-reject-all"
+      type="button"
+      class="rounded-full border border-border-soft px-6 py-3 text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+    >
+      Rechazar no esenciales
+    </button>
+    <button
+      id="cookie-customize"
+      type="button"
+      class="rounded-full px-4 py-3 text-sm font-medium text-ink-muted underline decoration-dotted underline-offset-4 hover:text-neon"
+    >
+      Configurar
+    </button>
+    <button
+      id="cookie-save-preferences"
+      type="button"
+      class="hidden rounded-full bg-neon px-6 py-3 text-sm font-semibold text-[#05100c]"
+    >
+      Guardar preferencias
+    </button>
+  </div>
+</div>
+
+<script>
+  type ConsentState = { necessary: true; analytics: boolean; marketing: boolean; timestamp: number };
+  const STORAGE_KEY = "bbu-cookie-consent";
+
+  const banner = document.getElementById("cookie-consent");
+  const options = document.getElementById("cookie-consent-options");
+  const analyticsInput = document.getElementById("consent-analytics") as HTMLInputElement | null;
+  const marketingInput = document.getElementById("consent-marketing") as HTMLInputElement | null;
+
+  const readConsent = (): ConsentState | null => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? (JSON.parse(raw) as ConsentState) : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const applyConsent = (consent: ConsentState) => {
+    document.dispatchEvent(new CustomEvent("bbu:consent-changed", { detail: consent }));
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "consent_update", ...consent });
+  };
+
+  const saveConsent = (analytics: boolean, marketing: boolean) => {
+    const consent: ConsentState = { necessary: true, analytics, marketing, timestamp: Date.now() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+    applyConsent(consent);
+    banner?.classList.add("hidden");
+  };
+
+  const existing = readConsent();
+  if (existing) {
+    applyConsent(existing);
+  } else {
+    banner?.classList.remove("hidden");
+  }
+
+  document.getElementById("cookie-accept-all")?.addEventListener("click", () => saveConsent(true, true));
+  document.getElementById("cookie-reject-all")?.addEventListener("click", () => saveConsent(false, false));
+  document.getElementById("cookie-customize")?.addEventListener("click", () => {
+    options?.classList.toggle("hidden");
+    options?.classList.toggle("flex");
+    document.getElementById("cookie-save-preferences")?.classList.toggle("hidden");
+  });
+  document.getElementById("cookie-save-preferences")?.addEventListener("click", () => {
+    saveConsent(Boolean(analyticsInput?.checked), Boolean(marketingInput?.checked));
+  });
+  document.getElementById("open-cookie-settings")?.addEventListener("click", () => {
+    banner?.classList.remove("hidden");
+    options?.classList.remove("hidden");
+    options?.classList.add("flex");
+    document.getElementById("cookie-save-preferences")?.classList.remove("hidden");
+    const existingConsent = readConsent();
+    if (existingConsent && analyticsInput && marketingInput) {
+      analyticsInput.checked = existingConsent.analytics;
+      marketingInput.checked = existingConsent.marketing;
+    }
+  });
+</script>

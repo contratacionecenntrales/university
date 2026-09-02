@@ -1,0 +1,48 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+const steps = [
+  {
+    n: "01",
+    title: "Diagnóstico",
+    description: "BBU Strategy Core analiza tu perfil, capital y objetivos para recomendarte el programa con mejor ajuste.",
+  },
+  {
+    n: "02",
+    title: "Diseño del modelo",
+    description: "Validamos tu modelo de negocio con datos reales de mercado antes de que inviertas tiempo o dinero.",
+  },
+  {
+    n: "03",
+    title: "Ejecución con IA",
+    description: "Ejecutas con el acompañamiento de sistemas de IA y la supervisión de la Dirección de Operaciones.",
+  },
+  {
+    n: "04",
+    title: "Escalado",
+    description: "Automatizamos y optimizamos lo que funciona para que el negocio crezca sin depender de ti al 100%.",
+  },
+];
+---
+
+<section class="py-24 md:py-32">
+  <div class="container-page">
+    <SectionHeading
+      eyebrow="Metodología propietaria"
+      title="Un sistema, no una promesa"
+      description="Cada alumno recorre el mismo proceso estructurado — diseñado por la Dirección de Operaciones y ejecutado con sistemas de IA propietarios."
+    />
+
+    <div class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border-soft bg-border-soft md:grid-cols-4">
+      {
+        steps.map((step) => (
+          <div class="bg-bg-alt p-6 transition-colors hover:bg-surface">
+            <span class="font-mono text-sm font-semibold text-gold">{step.n}</span>
+            <h3 class="mt-3 font-display text-lg font-semibold text-ink">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-muted">{step.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

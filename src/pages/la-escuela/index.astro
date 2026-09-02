@@ -1,0 +1,65 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import MethodologySection from "@/components/MethodologySection.astro";
+import TrustBar from "@/components/TrustBar.astro";
+import FinalCTA from "@/components/FinalCTA.astro";
+
+const pillars = [
+  {
+    title: "Criterio empresarial, no motivación vacía",
+    description:
+      "No vendemos entusiasmo. Enseñamos a tomar decisiones de negocio con datos, márgenes y estructura, igual que lo haría un operador senior.",
+  },
+  {
+    title: "Metodología propietaria y documentada",
+    description:
+      "Cada programa sigue un proceso replicable — diagnóstico, diseño, ejecución con IA y escalado — auditado por la Dirección de Operaciones.",
+  },
+  {
+    title: "Tecnología al servicio del alumno",
+    description:
+      "Los sistemas de IA propietarios de BBU están disponibles 24/7 para entrenar, corregir y acelerar el aprendizaje de cada alumno.",
+  },
+  {
+    title: "Comunidad con estándares altos",
+    description:
+      "El entorno de alumnos activos y el ranking de rendimiento generan presión de grupo positiva y consistencia en la ejecución.",
+  },
+];
+---
+
+<Layout
+  title="La Escuela"
+  description="Conoce la metodología propietaria, los principios y la estructura institucional de Big Bang University."
+>
+  <section class="bg-noise py-20 md:py-28">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="La Escuela"
+        title="La base del éxito profesional"
+        description="Big Bang University nace para resolver un problema concreto: la formación tradicional no escala y depende de personas. Nosotros construimos un sistema."
+      />
+    </div>
+  </section>
+
+  <TrustBar />
+
+  <section class="py-24 md:py-32">
+    <div class="container-page">
+      <div class="grid gap-5 md:grid-cols-2">
+        {
+          pillars.map((pillar) => (
+            <div class="card-surface rounded-2xl p-6">
+              <h3 class="font-display text-lg font-semibold text-ink">{pillar.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-muted">{pillar.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <MethodologySection />
+  <FinalCTA />
+</Layout>

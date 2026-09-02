@@ -1,0 +1,69 @@
+---
+import LegalLayout from "@/layouts/LegalLayout.astro";
+import { SITE } from "@/config/site";
+---
+
+<LegalLayout
+  title="Condiciones de Uso"
+  description="Condiciones generales de uso del sitio web de Big Bang University, gestionado por Bolvis Global S.L."
+  updated="2 de septiembre de 2026"
+>
+  <h2>1. Objeto y aceptación</h2>
+  <p>
+    Las presentes Condiciones de Uso regulan la utilización del Sitio Web {SITE.url}, titularidad de Bolvis Global
+    S.L. El acceso y uso del Sitio Web implica la aceptación plena de estas condiciones. Si el Usuario no está de
+    acuerdo con ellas, debe abstenerse de utilizar el Sitio Web.
+  </p>
+
+  <h2>2. Registro y veracidad de los datos</h2>
+  <p>
+    Cuando el uso de determinados servicios requiera el registro o aporte de datos personales, el Usuario se
+    compromete a proporcionar información veraz, exacta y actualizada, siendo responsable de las manifestaciones
+    falsas o inexactas que realice.
+  </p>
+
+  <h2>3. Contratación de programas formativos</h2>
+  <p>
+    La información sobre programas, precios, becas y financiación publicada en el Sitio Web tiene carácter
+    informativo y no constituye, por sí sola, una oferta vinculante. Las condiciones definitivas de matriculación
+    se formalizan de manera individualizada con cada alumno tras el proceso de admisión, mediante el documento
+    contractual correspondiente.
+  </p>
+  <p>
+    Cualquier referencia a resultados, rendimiento o casos de alumnos —incluido el ranking gamificado de la
+    comunidad— tiene fines ilustrativos y motivacionales, y no constituye promesa ni garantía de resultados,
+    ingresos o facturación para el Usuario.
+  </p>
+
+  <h2>4. Uso adecuado del Sitio Web</h2>
+  <p>El Usuario se compromete a no utilizar el Sitio Web para:</p>
+  <ul>
+    <li>Realizar actividades ilícitas, fraudulentas o contrarias a la buena fe y al orden público.</li>
+    <li>Difundir contenidos de carácter racista, xenófobo, pornográfico o que inciten al odio o la violencia.</li>
+    <li>Provocar daños en los sistemas físicos y lógicos de Bolvis Global S.L., de sus proveedores o de terceros.</li>
+    <li>Introducir o difundir virus informáticos o cualquier otro sistema susceptible de causar daños.</li>
+  </ul>
+
+  <h2>5. Propiedad intelectual</h2>
+  <p>
+    El uso indebido de los contenidos del Sitio Web, en los términos descritos en el Aviso Legal, podrá dar lugar
+    al ejercicio de las acciones legales que correspondan a Bolvis Global S.L. en defensa de sus legítimos
+    intereses.
+  </p>
+
+  <h2>6. Modificación de las condiciones y de los servicios</h2>
+  <p>
+    Bolvis Global S.L. se reserva el derecho a modificar, en cualquier momento y sin previo aviso, la
+    presentación, configuración y contenidos del Sitio Web, así como las presentes Condiciones de Uso.
+  </p>
+
+  <h2>7. Legislación aplicable</h2>
+  <p>
+    Estas Condiciones de Uso se rigen por la legislación española. Para cualquier controversia se estará a lo
+    dispuesto en el apartado correspondiente del <a href="/aviso-legal/">Aviso Legal</a>.
+  </p>
+  <p>
+    Para cualquier consulta relacionada con estas condiciones, puede escribirnos a{" "}
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+  </p>
+</LegalLayout>

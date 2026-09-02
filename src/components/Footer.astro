@@ -1,0 +1,73 @@
+---
+import Logo from "./Logo.astro";
+import { SITE, NAV_LINKS, FOOTER_LEGAL_LINKS } from "@/config/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="relative border-t border-border-soft bg-bg-alt">
+  <div class="divider-glow"></div>
+  <div class="container-page py-16">
+    <div class="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+      <div>
+        <Logo variant="full" class="h-8 w-auto" />
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-muted">{SITE.description}</p>
+        <p class="mt-6 text-xs uppercase tracking-[0.2em] text-ink-faint">{SITE.tagline}</p>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm font-semibold text-ink">Escuela</h3>
+        <ul class="mt-4 space-y-3">
+          {
+            NAV_LINKS.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm text-ink-muted transition-colors hover:text-neon">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm font-semibold text-ink">Legal</h3>
+        <ul class="mt-4 space-y-3">
+          {
+            FOOTER_LEGAL_LINKS.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm text-ink-muted transition-colors hover:text-neon">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm font-semibold text-ink">Contacto</h3>
+        <ul class="mt-4 space-y-3 text-sm text-ink-muted">
+          <li>
+            <a href={`mailto:${SITE.email}`} class="transition-colors hover:text-neon">{SITE.email}</a>
+          </li>
+          <li>{SITE.legalName}</li>
+        </ul>
+        <button
+          id="open-cookie-settings"
+          type="button"
+          class="mt-4 text-sm text-ink-muted underline decoration-dotted underline-offset-4 transition-colors hover:text-neon"
+        >
+          Configurar cookies
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-3 border-t border-border-soft pt-8 text-xs text-ink-faint md:flex-row md:items-center md:justify-between">
+      <p>
+        © {year} {SITE.legalName} — Titular de la marca comercial {SITE.name}. Todos los derechos reservados.
+      </p>
+      <p>Sitio web sujeto a la legislación española y de la Unión Europea.</p>
+    </div>
+  </div>
+</footer>

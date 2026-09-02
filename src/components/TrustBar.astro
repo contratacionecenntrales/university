@@ -1,0 +1,21 @@
+---
+const stats = [
+  { value: "8", label: "Programas especializados" },
+  { value: "3", label: "Sistemas de IA propietarios" },
+  { value: "24/7", label: "Comunidad y soporte activo" },
+  { value: "100%", label: "Online, en directo y grabado" },
+];
+---
+
+<section class="border-y border-border-soft bg-bg-alt py-10">
+  <div class="container-page grid grid-cols-2 gap-8 md:grid-cols-4">
+    {
+      stats.map((stat) => (
+        <div class="text-center md:text-left">
+          <p class="font-display text-3xl font-bold text-neon md:text-4xl">{stat.value}</p>
+          <p class="mt-1 text-xs uppercase tracking-wide text-ink-faint">{stat.label}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

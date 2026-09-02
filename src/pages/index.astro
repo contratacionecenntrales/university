@@ -1,0 +1,32 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import TrustBar from "@/components/TrustBar.astro";
+import MethodologySection from "@/components/MethodologySection.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ProgramCard from "@/components/ProgramCard.astro";
+import AIFacultySection from "@/components/AIFacultySection.astro";
+import FinalCTA from "@/components/FinalCTA.astro";
+import { PROGRAMS } from "@/data/programs";
+---
+
+<Layout title="Big Bang University — Escuela de negocios donde se construyen modelos rentables">
+  <Hero />
+  <TrustBar />
+  <MethodologySection />
+
+  <section class="py-24 md:py-32">
+    <div class="container-page">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <SectionHeading eyebrow="Catálogo · 8 programas" title="Elige tu sector, construye tu modelo" />
+        <a href="/programas/" class="font-display text-sm font-semibold text-neon hover:underline">Ver todos →</a>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {PROGRAMS.slice(0, 6).map((program, index) => <ProgramCard program={program} index={index} />)}
+      </div>
+    </div>
+  </section>
+
+  <AIFacultySection />
+  <FinalCTA />
+</Layout>

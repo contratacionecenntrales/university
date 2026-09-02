@@ -1,0 +1,25 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ProgramCard from "@/components/ProgramCard.astro";
+import { PROGRAMS } from "@/data/programs";
+---
+
+<Layout
+  title="Programas"
+  description="Catálogo de 8 programas de formación en negocio digital: e-commerce, trading, IA aplicada, ventas, ciberseguridad y más."
+>
+  <section class="bg-noise py-20 md:py-28">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="Catálogo · 8 programas"
+        title="Formación estructurada para construir un negocio real"
+        description="Cada programa combina metodología propietaria, sistemas de IA y dirección de operaciones senior. Elige tu sector y empieza con una hoja de ruta validada."
+      />
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {PROGRAMS.map((program, index) => <ProgramCard program={program} index={index} />)}
+      </div>
+    </div>
+  </section>
+</Layout>

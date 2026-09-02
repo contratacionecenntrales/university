@@ -1,0 +1,62 @@
+---
+import Button from "./Button.astro";
+---
+
+<section class="relative flex min-h-[92vh] items-center overflow-hidden pt-16">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute left-1/2 top-1/2 h-[140vw] w-[140vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/5 blur-3xl md:h-[70vw] md:w-[70vw]"></div>
+    <div class="absolute left-1/2 top-1/2 h-[40vw] w-[40vw] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/20"></div>
+    <div class="absolute left-1/2 top-1/2 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full border border-neon/10"></div>
+    <div class="hero-core absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon shadow-[var(--shadow-glow-neon)]"></div>
+  </div>
+
+  <div class="container-page relative">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-border-soft bg-surface/60 px-4 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.2em] text-ink-muted backdrop-blur">
+        <span class="h-1.5 w-1.5 rounded-full bg-neon"></span>
+        Escuela de negocios de alto rendimiento
+      </span>
+
+      <h1 class="mt-8 font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl md:text-7xl">
+        Donde se construyen <span class="text-neon text-glow-neon">modelos de negocio</span> rentables.
+      </h1>
+
+      <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
+        Metodología propietaria, sistemas de inteligencia artificial y dirección de operaciones de élite. Formación
+        estructurada para diseñar, validar y escalar negocios digitales con criterio empresarial — sin promesas
+        vacías.
+      </p>
+
+      <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button href="/becas-y-admision/" size="lg">Solicitar información →</Button>
+        <Button href="/programas/" variant="secondary" size="lg">Ver los 8 programas</Button>
+      </div>
+
+      <p class="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">
+        8 programas especializados · Financiación disponible · Comunidad activa
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-core {
+    animation: hero-pulse 3.2s ease-in-out infinite;
+  }
+  @keyframes hero-pulse {
+    0%,
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.6);
+      opacity: 0.6;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-core {
+      animation: none;
+    }
+  }
+</style>

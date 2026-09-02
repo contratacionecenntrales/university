@@ -1,0 +1,188 @@
+---
+import Button from "./Button.astro";
+import { WEBHOOK_URL } from "@/config/site";
+
+interface Props {
+  formId?: string;
+  source: string;
+  program?: string;
+  title?: string;
+  subtitle?: string;
+  submitLabel?: string;
+  compact?: boolean;
+}
+
+const {
+  formId = "lead-form",
+  source,
+  program,
+  title = "Solicita información",
+  subtitle = "Un asesor de admisiones te contactará en menos de 24h laborables.",
+  submitLabel = "Solicitar información →",
+  compact = false,
+} = Astro.props;
+---
+
+<form
+  id={formId}
+  class="card-surface rounded-2xl p-6 md:p-8"
+  data-lead-form
+  data-webhook-url={WEBHOOK_URL}
+  data-source={source}
+  data-program={program ?? ""}
+  novalidate
+>
+  {
+    !compact && (
+      <div class="mb-6">
+        <h3 class="font-display text-xl font-semibold text-ink">{title}</h3>
+        <p class="mt-1 text-sm text-ink-muted">{subtitle}</p>
+      </div>
+    )
+  }
+
+  <div class="grid gap-4">
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for={`${formId}-name`} class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-muted"
+          >Nombre y apellidos</label
+        >
+        <input
+          id={`${formId}-name`}
+          name="name"
+          type="text"
+          required
+          autocomplete="name"
+          class="w-full rounded-lg border border-border-soft bg-bg-alt px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-neon"
+        />
+      </div>
+      <div>
+        <label for={`${formId}-phone`} class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-muted"
+          >Teléfono</label
+        >
+        <input
+          id={`${formId}-phone`}
+          name="phone"
+          type="tel"
+          required
+          autocomplete="tel"
+          class="w-full rounded-lg border border-border-soft bg-bg-alt px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-neon"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label for={`${formId}-email`} class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-muted"
+        >Correo electrónico</label
+      >
+      <input
+        id={`${formId}-email`}
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        class="w-full rounded-lg border border-border-soft bg-bg-alt px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-neon"
+      />
+    </div>
+
+    <!-- Honeypot: hidden from real users, catches basic bots -->
+    <div class="hidden" aria-hidden="true">
+      <label for={`${formId}-website`}>Deja este campo vacío</label>
+      <input id={`${formId}-website`} name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <label class="flex items-start gap-3 text-xs leading-relaxed text-ink-muted">
+      <input
+        type="checkbox"
+        name="consent"
+        required
+        class="mt-0.5 h-4 w-4 shrink-0 accent-neon"
+      />
+      <span>
+        He leído y acepto la <a href="/privacidad/" class="text-neon underline underline-offset-2">Política de Privacidad</a> y
+        autorizo el tratamiento de mis datos para recibir información sobre los programas de {source}.
+      </span>
+    </label>
+
+    <Button type="submit" size={compact ? "md" : "lg"} class="mt-1 w-full">
+      <span data-label>{submitLabel}</span>
+    </Button>
+
+    <p data-form-status role="status" class="hidden text-sm"></p>
+  </div>
+</form>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>("form[data-lead-form]");
+
+  forms.forEach((form) => {
+    const statusEl = form.querySelector<HTMLParagraphElement>("[data-form-status]");
+    const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const labelEl = submitBtn?.querySelector("[data-label]");
+    const originalLabel = labelEl?.textContent ?? "Enviar";
+
+    const setStatus = (message: string, tone: "success" | "error") => {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      statusEl.classList.remove("hidden", "text-neon", "text-red-400");
+      statusEl.classList.add(tone === "success" ? "text-neon" : "text-red-400");
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+
+      // Bot caught the honeypot — silently drop.
+      if (String(data.get("website") ?? "").trim().length > 0) {
+        setStatus("Gracias. Nos pondremos en contacto contigo en breve.", "success");
+        form.reset();
+        return;
+      }
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const webhookUrl = form.dataset.webhookUrl;
+      if (!webhookUrl) {
+        setStatus("No se pudo enviar el formulario. Inténtalo de nuevo más tarde.", "error");
+        return;
+      }
+
+      const payload = {
+        name: data.get("name"),
+        phone: data.get("phone"),
+        email: data.get("email"),
+        consent: data.get("consent") === "on",
+        source: form.dataset.source ?? "",
+        program: form.dataset.program ?? "",
+        page: window.location.href,
+        submittedAt: new Date().toISOString(),
+      };
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (labelEl) labelEl.textContent = "Enviando…";
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error(`Webhook respondió ${response.status}`);
+
+        setStatus("¡Gracias! Hemos recibido tu solicitud y te contactaremos muy pronto.", "success");
+        form.reset();
+      } catch (error) {
+        console.error("Error al enviar el formulario de contacto:", error);
+        setStatus("No se pudo enviar el formulario. Prueba de nuevo o escríbenos directamente.", "error");
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (labelEl) labelEl.textContent = originalLabel;
+      }
+    });
+  });
+</script>

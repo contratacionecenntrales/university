@@ -1,0 +1,121 @@
+---
+import Logo from "./Logo.astro";
+import Button from "./Button.astro";
+import { NAV_LINKS, SITE } from "@/config/site";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-colors duration-300" data-scrolled="false">
+  <div class="container-page">
+    <div
+      id="site-header-inner"
+      class="flex items-center justify-between gap-4 rounded-2xl border border-transparent px-3 py-3 transition-all duration-300 md:px-4"
+    >
+      <a href="/" class="flex items-center gap-2 shrink-0" aria-label={SITE.name}>
+        <Logo variant="full" class="h-8 w-auto md:h-9" />
+      </a>
+
+      <nav class="hidden items-center gap-8 lg:flex" aria-label="Navegación principal">
+        {
+          NAV_LINKS.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "font-display text-sm font-medium tracking-tight transition-colors hover:text-neon",
+                currentPath.startsWith(link.href) ? "text-neon" : "text-ink-muted",
+              ]}
+              aria-current={currentPath.startsWith(link.href) ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="hidden shrink-0 lg:block">
+        <Button href="/becas-y-admision/" size="md">Solicitar información →</Button>
+      </div>
+
+      <button
+        id="nav-toggle"
+        type="button"
+        class="flex h-10 w-10 items-center justify-center rounded-full border border-border-soft text-ink lg:hidden"
+        aria-expanded="false"
+        aria-controls="nav-drawer"
+        aria-label="Abrir menú"
+      >
+        <svg class="nav-toggle-bars h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+        </svg>
+        <svg class="nav-toggle-x hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="nav-drawer"
+    class="fixed inset-0 top-[4.5rem] z-40 hidden translate-y-[-8px] flex-col gap-1 bg-bg/98 px-6 py-8 opacity-0 backdrop-blur transition-all duration-200 lg:hidden"
+    aria-hidden="true"
+  >
+    <nav class="flex flex-col gap-1" aria-label="Navegación móvil">
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            href={link.href}
+            class="rounded-lg px-3 py-3 font-display text-lg font-medium text-ink transition-colors hover:bg-surface hover:text-neon"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="mt-6">
+      <Button href="/becas-y-admision/" size="lg" class="w-full">Solicitar información →</Button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header");
+  const inner = document.getElementById("site-header-inner");
+
+  const onScroll = () => {
+    const scrolled = window.scrollY > 24;
+    header?.setAttribute("data-scrolled", String(scrolled));
+    inner?.classList.toggle("bg-bg/85", scrolled);
+    inner?.classList.toggle("backdrop-blur-xl", scrolled);
+    inner?.classList.toggle("border-border-soft", scrolled);
+    inner?.classList.toggle("shadow-[0_8px_30px_rgba(0,0,0,0.35)]", scrolled);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  const toggle = document.getElementById("nav-toggle");
+  const drawer = document.getElementById("nav-drawer");
+  const bars = toggle?.querySelector(".nav-toggle-bars");
+  const x = toggle?.querySelector(".nav-toggle-x");
+  let open = false;
+
+  const setState = (value: boolean) => {
+    open = value;
+    drawer?.classList.toggle("hidden", !value);
+    requestAnimationFrame(() => {
+      drawer?.classList.toggle("opacity-0", !value);
+      drawer?.classList.toggle("translate-y-[-8px]", !value);
+    });
+    drawer?.setAttribute("aria-hidden", String(!value));
+    toggle?.setAttribute("aria-expanded", String(value));
+    document.body.classList.toggle("overflow-hidden", value);
+    bars?.classList.toggle("hidden", value);
+    x?.classList.toggle("hidden", !value);
+  };
+
+  toggle?.addEventListener("click", () => setState(!open));
+  drawer?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setState(false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && open) setState(false);
+  });
+</script>

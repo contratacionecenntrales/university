@@ -1,0 +1,38 @@
+---
+import type { Program } from "@/data/programs";
+
+interface Props {
+  program: Program;
+  index?: number;
+}
+const { program, index } = Astro.props;
+---
+
+<a
+  href={`/programas/${program.slug}/`}
+  class="group card-surface relative flex h-full flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-neon/40 hover:shadow-[var(--shadow-glow-neon)]"
+>
+  <div class="flex items-center justify-between">
+    {index !== undefined && (
+      <span class="font-mono text-xs font-semibold text-ink-faint">{String(index + 1).padStart(2, "0")}</span>
+    )}
+    <span class="rounded-full border border-border-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-faint">
+      {program.category}
+    </span>
+  </div>
+
+  <h3 class="mt-5 font-display text-xl font-semibold text-ink transition-colors group-hover:text-neon">
+    {program.shortTitle}
+  </h3>
+  <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{program.description}</p>
+
+  <div class="mt-6 flex items-center justify-between border-t border-border-soft pt-4 text-xs text-ink-faint">
+    <span>{program.duration}</span>
+    <span class="inline-flex items-center gap-1 font-display font-semibold text-neon">
+      Ver programa
+      <svg viewBox="0 0 16 16" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
+</a>

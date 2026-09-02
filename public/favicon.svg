@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Big Bang University">
+  <defs>
+    <linearGradient id="f-gold" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f3e3b8"/>
+      <stop offset="60%" stop-color="#c9a961"/>
+      <stop offset="100%" stop-color="#8f6f2e"/>
+    </linearGradient>
+    <radialGradient id="f-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff8e0"/>
+      <stop offset="45%" stop-color="#f2cf7d" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#f2cf7d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#0c1424"/>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="url(#f-gold)" stroke-width="1.6" opacity="0.85"/>
+  <circle cx="32" cy="32" r="9" fill="url(#f-core)"/>
+  <path d="M32 24 L34.4 30 L40.5 32 L34.4 34 L32 40 L29.6 34 L23.5 32 L29.6 30 Z" fill="url(#f-gold)"/>
+  <circle cx="32" cy="10" r="1.8" fill="url(#f-gold)"/>
+</svg>

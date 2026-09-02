@@ -1,0 +1,85 @@
+---
+import { FACULTY_UNITS } from "@/data/faculty";
+import LiveLeaderboard from "./LiveLeaderboard.astro";
+
+interface Props {
+  showLeaderboard?: boolean;
+}
+const { showLeaderboard = true } = Astro.props;
+---
+
+<section class="relative overflow-hidden py-24 md:py-32" id="claustro-ia">
+  <div class="container-page">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-gold">Autoridad institucional</span>
+      <h2 class="mt-4 font-display text-3xl font-bold tracking-tight text-ink md:text-5xl">
+        Claustro de Inteligencia Artificial <span class="text-neon text-glow-neon">&amp; Mentores de Élite</span>
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-ink-muted md:text-lg">
+        No dependemos de la disponibilidad de una persona. Cada programa BBU se apoya en sistemas de IA propietarios
+        entrenados con miles de casos reales, dirigidos y validados por un equipo de operaciones senior — una
+        metodología institucional, no una promesa individual.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {
+        FACULTY_UNITS.map((unit) => (
+          <article class="group card-surface relative rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-neon/40 hover:shadow-[var(--shadow-glow-neon)]">
+            <div class="flex items-start justify-between gap-3">
+              <div
+                class:list={[
+                  "flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold font-display",
+                  unit.kind === "IA"
+                    ? "border-neon/40 bg-neon/10 text-neon"
+                    : "border-gold/40 bg-gold/10 text-gold-soft",
+                ]}
+              >
+                {unit.kind === "IA" ? (
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M12 2v4M12 18v4M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" stroke-linecap="round" />
+                    <circle cx="12" cy="12" r="5" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke-linecap="round" />
+                    <circle cx="12" cy="8" r="4" />
+                  </svg>
+                )}
+              </div>
+              <span
+                class:list={[
+                  "rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
+                  unit.kind === "IA" ? "bg-neon/10 text-neon" : "bg-gold/10 text-gold-soft",
+                ]}
+              >
+                {unit.kind === "IA" ? "Sistema de IA" : "Dirección senior"}
+              </span>
+            </div>
+
+            <h3 class="mt-5 font-display text-lg font-semibold text-ink">{unit.name}</h3>
+            <p class="mt-1 text-xs font-medium uppercase tracking-wide text-ink-faint">{unit.role}</p>
+            <p class="mt-3 text-sm leading-relaxed text-ink-muted">{unit.description}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    {
+      showLeaderboard && (
+        <div class="mt-20">
+          <div class="mx-auto mb-10 max-w-2xl text-center">
+            <h3 class="font-display text-2xl font-bold text-ink md:text-3xl">Rendimiento de la comunidad, en vivo</h3>
+            <p class="mt-3 text-sm text-ink-muted md:text-base">
+              La presión de grupo bien dirigida acelera resultados. Así se mueve el ranking de la comunidad BBU
+              ahora mismo.
+            </p>
+          </div>
+          <div class="mx-auto max-w-2xl">
+            <LiveLeaderboard />
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>

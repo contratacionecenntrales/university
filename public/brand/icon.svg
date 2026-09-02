@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Big Bang University">
+  <defs>
+    <linearGradient id="bbu-gold" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f3e3b8"/>
+      <stop offset="55%" stop-color="#c9a961"/>
+      <stop offset="100%" stop-color="#8f6f2e"/>
+    </linearGradient>
+    <radialGradient id="bbu-navy" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#1b2a4a"/>
+      <stop offset="100%" stop-color="#0c1424"/>
+    </radialGradient>
+    <radialGradient id="bbu-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff8e0"/>
+      <stop offset="45%" stop-color="#f2cf7d" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#f2cf7d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="28" fill="none" stroke="url(#bbu-gold)" stroke-width="1.1" opacity="0.85"/>
+  <circle cx="32" cy="32" r="22.5" fill="url(#bbu-navy)" stroke="url(#bbu-gold)" stroke-width="0.8"/>
+
+  <path d="M49.5 20.5 A28 28 0 0 1 53 30.5" fill="none" stroke="url(#bbu-gold)" stroke-width="1" stroke-dasharray="0.8 3.4" stroke-linecap="round"/>
+
+  <g fill="url(#bbu-gold)">
+    <circle cx="32" cy="4" r="1.6"/>
+    <circle cx="32" cy="60" r="1.6"/>
+    <circle cx="53" cy="30.5" r="1.3"/>
+    <circle cx="11.4" cy="42" r="1.1"/>
+  </g>
+
+  <circle cx="32" cy="32" r="11" fill="url(#bbu-core)"/>
+  <path d="M32 24.5 L34 30 L39.5 32 L34 34 L32 39.5 L30 34 L24.5 32 L30 30 Z" fill="url(#bbu-gold)"/>
+</svg>
