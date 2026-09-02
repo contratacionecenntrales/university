@@ -29,6 +29,28 @@
   --shadow-glow-neon: 0 0 0.5px rgba(0, 230, 168, 0.6), 0 0 24px rgba(0, 230, 168, 0.25), 0 0 64px rgba(0, 230, 168, 0.12);
   --shadow-glow-gold: 0 0 0.5px rgba(201, 169, 97, 0.6), 0 0 24px rgba(201, 169, 97, 0.22), 0 0 64px rgba(201, 169, 97, 0.1);
   --shadow-glow-cyan: 0 0 0.5px rgba(34, 211, 238, 0.6), 0 0 24px rgba(34, 211, 238, 0.22);
+
+  /* shadcn/ui-compatible semantic tokens, mapped onto the palette above so
+     components from ui.shadcn.com drop in without a second theme. */
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-surface);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary: var(--color-neon);
+  --color-primary-foreground: #05100c;
+  --color-secondary: var(--color-surface-2);
+  --color-secondary-foreground: var(--color-ink);
+  --color-muted: var(--color-surface-2);
+  --color-muted-foreground: var(--color-ink-muted);
+  --color-accent: var(--color-gold);
+  --color-accent-foreground: #05100c;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fff5f5;
+  --color-input: var(--color-border);
+  --color-ring: var(--color-neon);
+  --radius: 0.75rem;
 }
 
 @layer base {
@@ -107,6 +129,21 @@
   .divider-glow {
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.6), transparent);
+  }
+
+  .loader {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border-soft);
+    border-top-color: var(--color-neon);
+    animation: loader-spin 0.8s linear infinite;
+  }
+
+  @keyframes loader-spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .legal-content h2 {
