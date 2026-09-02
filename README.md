@@ -1,6 +1,6 @@
 # Big Bang University
 
-Sitio web de Big Bang University — escuela de negocios digital, marca comercial de **Bolvis Global S.L.**
+Sitio web de Big Bang University — escuela de negocios digital, marca comercial de **Evolvix Global S.L.**
 
 Construido con [Astro](https://astro.build) + TypeScript + Tailwind CSS v4, salida 100% estática.
 
@@ -38,6 +38,6 @@ o Make sin necesidad de adaptar el payload.
 
 Los textos de Aviso Legal, Política de Privacidad y Política de Cookies
 (`src/pages/aviso-legal`, `src/pages/privacidad`, `src/pages/politica-cookies`)
-identifican a **Bolvis Global S.L.** como titular. El CIF se ha dejado como
+identifican a **Evolvix Global S.L.** como titular. El CIF se ha dejado como
 marcador de posición (`B-XXXXXXXX`) pendiente de validación definitiva antes
 de publicar el sitio en producción.

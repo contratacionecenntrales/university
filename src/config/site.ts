@@ -1,6 +1,6 @@
 export const SITE = {
   name: "Big Bang University",
-  legalName: "Bolvis Global S.L.",
+  legalName: "Evolvix Global S.L.",
   domain: "www.bigbanuniversity.es",
   url: "https://www.bigbanuniversity.es",
   email: "info@bigbanuniversity.es",
